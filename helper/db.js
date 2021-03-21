@@ -3,7 +3,8 @@ var url = "mongodb://localhost:27017";
 var dbo = undefined;
 const COLLECTIONS = {
     USERS: 'users',
-    FILES: 'files'
+    FILES: 'files',
+    CONFIGS:'configs'
 };
 
 MongoClient.connect(url, function (err, db) {

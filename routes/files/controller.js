@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../../helper/db');
+//encryption
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA({b: 512});
 
 router.get('/list', function(request, response, next) {
     let filterData = {
