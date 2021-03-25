@@ -14,6 +14,7 @@ router.use((request, response, next) => {
 });*/
 router.use('/login', require('./login'));
 router.use('/register', require('./register'));
-router.use('/users', require('./users'));
+router.use('/files', require('./files'));
+router.use('/configs', require('./configs'));
 
 module.exports = router;
