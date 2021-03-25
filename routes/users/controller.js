@@ -18,17 +18,25 @@ var upload = multer({storage: storage});
 
 router.get('/list', function (request, response, next) {
     let filterData = {
-        name: request.body.name,
-        lastName: request.body.lastName,
-        username: request.body.username,
-        password: request.body.password,
-        company: request.body.company,
-        role: request.body.role,
-        email: request.body.email,
-        phoneNumber: request.body.phoneNumber,
-        birthday: request.body.birthday,
-        address: request.body.address,
-        identityNumber: request.body.identityNumber,
+        username: request.query.username,
+        nameandsurename: request.query.nameandsurename,
+        userrole: request.query.userrole,
+        password: request.query.password,
+        shenasname: request.query.shenasname,
+        nationalid: request.query.nationalid,
+        birthdate: request.query.birthdate,
+        birthplace: request.query.birthplace,
+        address: request.query.address,
+        tel: request.query.tel,
+        recruiteddate: request.query.recruiteddate,
+        profession: request.query.profession,
+        minimumsalary: request.query.minimumsalary,
+        comment: request.query.comment,
+        pricefrom: request.query.pricefrom,
+        priceto :request.query.priceto,
+        pricetometer :request.query.pricefrommeter,
+        pricetometer :request.query.pricefrommeter,
+
     };
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
     db.find(db.COLLECTIONS.USERS, filterData).then((users) => {
@@ -54,17 +62,24 @@ router.get('/download', function (req, res) {
 
 router.post('/insert', upload.single('file'), function (request, response, next) {
     let dataObject = {
-        name: request.body.name,
-        lastName: request.body.lastName,
-        username: request.body.username,
-        password: request.body.password,
-        company: request.body.company,
-        role: request.body.role,
-        email: request.body.email,
-        phoneNumber: request.body.phoneNumber,
-        birthday: request.body.birthday,
-        address: request.body.address,
-        identityNumber: request.body.identityNumber,
+        username: request.query.username,
+        nameandsurename: request.query.nameandsurename,
+        userrole: request.query.userrole,
+        password: request.query.password,
+        shenasname: request.query.shenasname,
+        nationalid: request.query.nationalid,
+        birthdate: request.query.birthdate,
+        birthplace: request.query.birthplace,
+        address: request.query.address,
+        tel: request.query.tel,
+        recruiteddate: request.query.recruiteddate,
+        profession: request.query.profession,
+        minimumsalary: request.query.minimumsalary,
+        comment: request.query.comment,
+        pricefrom: request.query.pricefrom,
+        priceto :request.query.priceto,
+        pricetometer :request.query.pricefrommeter,
+        pricetometer :request.query.pricefrommeter,
     };
     db.insert(db.COLLECTIONS.USERS, dataObject).then((res) => {
         response.status(200).json(res);
