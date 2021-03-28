@@ -2,10 +2,13 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017";
 var dbo = undefined;
 //collections
+
 const COLLECTIONS = {
     USERS: 'users',
     FILES: 'files',
-    CONFIGS:'configs'
+    CONFIGS:'configs',
+    AGENCY : 'agency'
+
 };
 
 MongoClient.connect(url, function (err, db) {
