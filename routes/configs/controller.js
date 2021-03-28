@@ -7,6 +7,7 @@ const key = new NodeRSA({b: 512});
 
 router.get('/lists', function(request, response, next) {
     let filterData = {
+        id:0,
         aparteman:request.query.aparteman ,
         vila: request.query.vila,
         mosteghelat: request.query.mosteghelat,
@@ -35,7 +36,7 @@ router.get('/lists', function(request, response, next) {
 
 router.post('/insert', function(request, response, next) {
     let dataObject = {
-        //aparteman: key.encrypt(request.body.aparteman, 'base64'),
+        Id:0,
         aparteman:request.body.aparteman ,
         vila: request.body.vila,
         mosteghelat: request.body.mosteghelat,
@@ -60,8 +61,12 @@ router.post('/insert', function(request, response, next) {
     });
 });
 
-router.post('/edit', function(request, response, next) {
+router.post('/edit', function(request, response, next)
+{
     let query = {
+        Id:  0,
+    };
+    let newValues = {
         aparteman: request.body.aparteman,
         vila: request.body.vila,
         mosteghelat: request.body.mosteghelat,
@@ -79,7 +84,7 @@ router.post('/edit', function(request, response, next) {
         tanzimkonande: request.body.tanzimkonande,
         code: request.body.code,
     };
-    db.update(db.COLLECTIONS.CONFIGS, query, newValues).then((files) => {
+    db.update(db.COLLECTIONS.CONFIGS, query , newValues ).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
         response.status(409).send("File not found");
