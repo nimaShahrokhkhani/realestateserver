@@ -89,7 +89,7 @@ function update(collection, updateQuery, newValues) {
     return new Promise((resolve, reject) => {
         if (dbo) {
             dbo.createCollection(collection, function (err, res) {
-                dbo.collection(collection).updateOne(updateQuery, newValues, function(err, res) {
+                dbo.collection(collection).updateOne(updateQuery, newValues, {upsert: true}, function(err, res) {
                     if (err) reject(err);
                     resolve(res);
                 });
