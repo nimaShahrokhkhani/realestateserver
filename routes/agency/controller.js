@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../../helper/db');
 
 
-router.get('/lists', function(request, response, next) {
+router.get('/list', function(request, response, next) {
 
     let filterData = {
         agencyId : request.query.agencyId ,
