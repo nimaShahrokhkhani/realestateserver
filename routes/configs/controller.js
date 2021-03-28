@@ -5,7 +5,7 @@ var db = require('../../helper/db');
 const NodeRSA = require('node-rsa');
 const key = new NodeRSA({b: 512});
 
-router.get('/lists', function(request, response, next) {
+router.get('/list', function(request, response, next) {
     let filterData = {
         id:0,
         aparteman:request.query.aparteman ,
@@ -94,23 +94,9 @@ router.post('/edit', function(request, response, next)
 router.post('/delete', function(request, response, next) {
 
     let query = {
-        aparteman: request.body.aparteman,
-        vila: request.body.vila,
-        mosteghelat: request.body.mosteghelat,
-        khareji: request.body.khareji,
-        kolangi: request.body.kolangi,
-        dafterekar: request.body.dafterekar,
-        emkanat: request.body.emkanat,
-        vaziyatsanad: request.body.vaziyatsanad,
-        manbaetelati: request.body.manbaetelati,
-        nama: request.body.nama,
-        mantaghe: request.body.mantaghe,
-        noemelk: request.body.noemelk,
-        moshakhase: request.body.moshakhase,
-        manba: request.body.manba,
-        tanzimkonande: request.body.tanzimkonande,
-        code: request.body.code,
+        Id: request.body.Id,
     };
+
     db.deleteFunction(db.COLLECTIONS.CONFIGS, query).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
