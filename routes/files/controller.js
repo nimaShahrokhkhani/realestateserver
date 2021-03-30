@@ -59,7 +59,10 @@ router.get('/list', function (request, response, next) {
             $gte: request.query.totalPriceFrom,
             $lte: request.query.totalPriceTo,
         },
-        unitPrice: request.query.unitPrice,
+        unitPrice: {
+            $gte: request.query.unitPriceFrom,
+            $lte: request.query.unitPriceTo,
+        },
         priceComment: request.query.priceComment,
         pool: request.query.pool,
         sona: request.query.sona,
@@ -98,10 +101,6 @@ router.get('/list', function (request, response, next) {
             $gte: request.query.fromNumber,
             $lte: request.query.toNumber,
         },
-        meter: {
-            $gte: request.query.meterFrom,
-            $lte: request.query.meterTo,
-        },
         inHurry: request.query.inHurry,
         equipments: request.query.equipments,
         archive: request.query.archive,
@@ -120,7 +119,6 @@ router.get('/list', function (request, response, next) {
             console.log(file);
             file.tel1 = (file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.decrypt(file.tel1, 'utf8');
             file.tel2 = (file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.decrypt(file.tel2, 'utf8');
-            ;
             file.tel3 = (file.tel3 === null || file.tel3 === undefined) ? file.tel3 : key.decrypt(file.tel3, 'utf8');
             file.tel4 = (file.tel4 === null || file.tel4 === undefined) ? file.tel4 : key.decrypt(file.tel4, 'utf8');
             file.tel5 = (file.tel5 === null || file.tel5 === undefined) ? file.tel5 : key.decrypt(file.tel5, 'utf8');
