@@ -4,6 +4,7 @@ var db = require('../../helper/db');
 //encryption
 const NodeRSA = require('node-rsa');
 const key = new NodeRSA({b: 512});
+key.setOptions({encryptionScheme: 'pkcs1'});
 
 router.get('/list', function (request, response, next) {
     let filterData = {
@@ -116,7 +117,6 @@ router.get('/list', function (request, response, next) {
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
     db.find(db.COLLECTIONS.FILES, {}).then((files) => {
         for (let file of files) {
-            console.log(file);
             file.tel1 = (file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.decrypt(file.tel1, 'utf8');
             file.tel2 = (file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.decrypt(file.tel2, 'utf8');
             file.tel3 = (file.tel3 === null || file.tel3 === undefined) ? file.tel3 : key.decrypt(file.tel3, 'utf8');

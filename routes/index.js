@@ -12,6 +12,7 @@ router.use((request, response, next) => {
             next(error);
         });
 });*/
+router.use('/users', require('./users'));
 router.use('/login', require('./login'));
 router.use('/register', require('./register'));
 router.use('/files', require('./files'));

@@ -61,7 +61,7 @@ router.get('/download', function (req, res) {
     filestream.pipe(res);
 });
 
-router.post('/insert', upload.single('file'), function (request, response, next) {
+router.post('/insert', function (request, response, next) {
     let dataObject = {
         username: request.body.username,
         name: request.body.name,
