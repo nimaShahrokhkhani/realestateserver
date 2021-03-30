@@ -54,10 +54,6 @@ router.get('/list', function (request, response, next) {
             $gte: request.query.unitNoFrom,
             $lte: request.query.unitNoTo,
         },
-        unitNoInFloor: {
-                $gte: request.query.unitNoInFloorFrom,
-                $lte: request.query.unitNoInFloorTo,
-       },
         unitComment: request.query.unitComment,
         totalPrice: {
             $gte: request.query.totalPriceFrom,
