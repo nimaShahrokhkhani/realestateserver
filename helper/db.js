@@ -1,10 +1,14 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017";
 var dbo = undefined;
+//collections
+
 const COLLECTIONS = {
     USERS: 'users',
     FILES: 'files',
-    CONFIGS:'configs'
+    CONFIGS:'configs',
+    AGENCY : 'agency'
+
 };
 
 MongoClient.connect(url, function (err, db) {
@@ -89,7 +93,7 @@ function update(collection, updateQuery, newValues) {
     return new Promise((resolve, reject) => {
         if (dbo) {
             dbo.createCollection(collection, function (err, res) {
-                dbo.collection(collection).updateOne(updateQuery, newValues, function(err, res) {
+                dbo.collection(collection).updateOne(updateQuery, newValues, {upsert: true}, function(err, res) {
                     if (err) reject(err);
                     resolve(res);
                 });

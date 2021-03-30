@@ -7,7 +7,7 @@ const key = new NodeRSA({b: 512});
 
 router.get('/list', function(request, response, next) {
     let filterData = {
-        id:0,
+        configId:0,
         aparteman:request.query.aparteman ,
         vila: request.query.vila,
         mosteghelat: request.query.mosteghelat,
@@ -27,7 +27,7 @@ router.get('/list', function(request, response, next) {
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
-    db.find(db.COLLECTIONS.FILES, {}).then((files) => {
+    db.find(db.COLLECTIONS.CONFIGS, {}).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
         response.status(409).send("file not found");
@@ -36,7 +36,7 @@ router.get('/list', function(request, response, next) {
 
 router.post('/insert', function(request, response, next) {
     let dataObject = {
-        Id:0,
+        configId:0,
         aparteman:request.body.aparteman ,
         vila: request.body.vila,
         mosteghelat: request.body.mosteghelat,
@@ -54,7 +54,7 @@ router.post('/insert', function(request, response, next) {
         tanzimkonande: request.body.tanzimkonande,
         code: request.body.code,
     };
-    db.insert(db.COLLECTIONS.FILES, dataObject).then((files) => {
+    db.insert(db.COLLECTIONS.CONFIGS, dataObject).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
         response.status(409).send("File did not added");
@@ -64,9 +64,9 @@ router.post('/insert', function(request, response, next) {
 router.post('/edit', function(request, response, next)
 {
     let query = {
-        Id:  0,
+        configId:  0,
     };
-    let newValues = {
+    let newValuesObject = {
         aparteman: request.body.aparteman,
         vila: request.body.vila,
         mosteghelat: request.body.mosteghelat,
@@ -83,6 +83,10 @@ router.post('/edit', function(request, response, next)
         manba: request.body.manba,
         tanzimkonande: request.body.tanzimkonande,
         code: request.body.code,
+    };
+    Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
+    let newValues = {
+        $set: newValuesObject
     };
     db.update(db.COLLECTIONS.CONFIGS, query , newValues ).then((files) => {
         response.status(200).json(files);
