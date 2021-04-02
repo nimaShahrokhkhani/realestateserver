@@ -1,10 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../../helper/db');
+const fs = require('fs');
 //encryption
 const NodeRSA = require('node-rsa');
-const key = new NodeRSA({b: 512});
-key.setOptions({encryptionScheme: 'pkcs1'});
+var key = new NodeRSA({b: 512});
+const loadKey = () => {
+    try {
+        return fs.readFileSync('./key.json', 'utf8')
+    } catch (err) {
+        return false
+    }
+};
+if (loadKey()) {
+    key.importKey(loadKey());
+} else {
+    try {
+        key.setOptions({encryptionScheme: 'pkcs1'});
+        fs.writeFileSync('./key.json', key.exportKey())
+    } catch (err) {
+        console.error(err)
+    }
+}
 
 router.get('/list', function (request, response, next) {
     let filterData = {
