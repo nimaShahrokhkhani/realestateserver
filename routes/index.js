@@ -17,5 +17,7 @@ router.use('/login', require('./login'));
 router.use('/register', require('./register'));
 router.use('/files', require('./files'));
 router.use('/configs', require('./configs'));
+router.use('/regionPrice', require('./regionPrice'));
+
 
 module.exports = router;
