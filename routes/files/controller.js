@@ -237,12 +237,16 @@ router.post('/insert', function (request, response, next) {
 
     //const encrypted = key.encrypt(dataObject, 'base64');
     // console.log('encrypted: ', encrypted);
-
-    db.insert(db.COLLECTIONS.FILES, dataObject).then((files) => {
-        response.status(200).json(files);
+    db.find(db.COLLECTIONS.FILES, {}).then((files) => {
+        dataObject._id = files.length;
+        db.insert(db.COLLECTIONS.FILES, dataObject).then((files) => {
+            response.status(200).json(files);
+        }).catch(() => {
+            response.status(409).send("File did not added");
+        });
     }).catch(() => {
         response.status(409).send("File did not added");
-    });
+    })
 });
 
 router.post('/edit', function (request, response, next) {

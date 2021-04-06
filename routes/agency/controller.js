@@ -6,7 +6,6 @@ var db = require('../../helper/db');
 router.get('/list', function(request, response, next) {
 
     let filterData = {
-        agencyId : request.query.agencyId ,
         agencyName:request.query.agencyName ,
         agencyAddress: request.query.agencyAddress,
         managementName: request.query.managementName,
@@ -16,7 +15,7 @@ router.get('/list', function(request, response, next) {
         regionList: request.query.regionList,
         totalPrice: request.query.totalPrice,
         agencyCode : request.query.agencyCode,
-        registration: request.query.registration,
+        registrationCode: request.query.registrationCode,
         manualPending :  request.query.manualPending,
     };
 
@@ -24,14 +23,13 @@ router.get('/list', function(request, response, next) {
     db.find(db.COLLECTIONS.AGENCY, {}).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
-        response.status(409).send("file not found");
+        response.status(409).send("agency not found");
     });
 });
 
 router.post('/insert', function(request, response, next) {
 
     let dataObject = {
-        agencyId : request.query.agencyId ,
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -41,19 +39,19 @@ router.post('/insert', function(request, response, next) {
         regionList: request.body.regionList,
         totalPrice: request.body.totalPrice,
         agencyCode : request.body.agencyCode,
-        registration: request.body.registration,
+        registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
     };
     db.insert(db.COLLECTIONS.AGENCY, dataObject).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
-        response.status(409).send("File did not added");
+        response.status(409).send("agency did not added");
     });
 });
 
 router.post('/edit', function(request, response, next) {
     let query = {
-        agencyId : request.query.agencyId ,
+        agencyCode : request.query.agencyCode ,
     };
     let newValues = {
         agencyName:request.body.agencyName ,
@@ -64,26 +62,25 @@ router.post('/edit', function(request, response, next) {
         discount: request.body.discount,
         regionList: request.body.regionList,
         totalPrice: request.body.totalPrice,
-        agencyCode : request.body.agencyCode,
-        registration: request.body.registration,
+        registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
     };
     db.update(db.COLLECTIONS.AGENCY, query , newValues).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
-        response.status(409).send("File not found");
+        response.status(409).send("agency not found");
     });
 });
 
 router.post('/delete', function(request, response, next) {
 
     let query = {
-        agencyId : request.body.agencyId ,
+        agencyCode : request.body.agencyCode,
     };
     db.deleteFunction(db.COLLECTIONS.AGENCY, query).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
-        response.status(409).send("File not found");
+        response.status(409).send("agency not found");
     });
 });
 
