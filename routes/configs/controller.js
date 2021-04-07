@@ -79,7 +79,7 @@ router.post('/edit', function(request, response, next)
         source: request.body.source,
         frontKind: request.body.frontKind,
         region: request.body.region,
-        regionPrice: request.body.region,
+        regionPrice: request.body.regionPrice,
         type: request.body.type,
         moshakhase: request.body.moshakhase,
         publisher: request.body.publisher,
