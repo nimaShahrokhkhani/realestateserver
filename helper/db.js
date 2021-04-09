@@ -8,8 +8,8 @@ const COLLECTIONS = {
     FILES: 'files',
     CONFIGS:'configs',
     AGENCY : 'agency',
-    REGIONPRICE : 'regionPrice'
-
+    REGIONPRICE : 'regionPrice' ,
+    ACCOUNTANT: 'accountant'
 
 };
 

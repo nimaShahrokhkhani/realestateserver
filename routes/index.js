@@ -15,6 +15,7 @@ router.use((request, response, next) => {
         });
 });
 router.use('/users', require('./users'));
+router.use('/accountant', require('./accountant'));
 router.use('/register', require('./register'));
 router.use('/files', require('./files'));
 router.use('/configs', require('./configs'));
