@@ -4,7 +4,7 @@ const session = require('express-session');
 function initialize() {
 
     return session({
-        secret: 'market',
+        secret: 'newsession',
         cookie: {
             httpOnly: true,
             secure: false
