@@ -25,6 +25,7 @@ router.get('/list', function(request, response, next) {
         pool: request.query.pool,
         sona: request.query.sona,
         jakozi: request.query.jakozi,
+        blackList: request.query.blackList,
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -55,6 +56,7 @@ router.post('/insert', function(request, response, next) {
         pool: request.body.pool,
         sona: request.body.sona,
         jakozi: request.body.jakozi,
+        blackList: request.body.blackList,
     };
     db.insert(db.COLLECTIONS.CONFIGS, dataObject).then((files) => {
         response.status(200).json(files);
@@ -86,6 +88,7 @@ router.post('/edit', function(request, response, next)
         pool: request.body.pool,
         sona: request.body.sona,
         jakozi: request.body.jakozi,
+        blackList: request.body.blackList,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
