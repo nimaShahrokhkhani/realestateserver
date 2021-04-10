@@ -17,6 +17,10 @@ router.get('/list', function(request, response, next) {
         agencyCode : request.query.agencyCode,
         registrationCode: request.query.registrationCode,
         manualPending :  request.query.manualPending,
+        expirationDate :  request.query.expirationDate,
+        registrationDate :  request.query.registrationDate,
+        nationalId :  request.query.nationalId,
+        startDate :  request.query.startDate,
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -41,6 +45,11 @@ router.post('/insert', function(request, response, next) {
         agencyCode : request.body.agencyCode,
         registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
+        expirationDate :  request.body.expirationDate,
+        registrationDate :  request.body.registrationDate,
+        nationalId :  request.body.nationalId,
+        startDate :  request.body.startDate,
+
     };
     db.insert(db.COLLECTIONS.AGENCY, dataObject).then((files) => {
         response.status(200).json(files);
@@ -64,6 +73,10 @@ router.post('/edit', function(request, response, next) {
         totalPrice: request.body.totalPrice,
         registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
+        expirationDate :  request.body.expirationDate,
+        registrationDate :  request.body.registrationDate,
+        nationalId :  request.body.nationalId,
+        startDate :  request.body.startDate,
     };
     db.update(db.COLLECTIONS.AGENCY, query , newValues).then((files) => {
         response.status(200).json(files);
