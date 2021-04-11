@@ -98,6 +98,30 @@ router.post('/edit', function(request, response, next) {
     });
 });
 
+router.post('/registerAgency', function(request, response, next) {
+    let query = {
+        agencyCode : request.body.agencyCode,
+    };
+    db.find(db.COLLECTIONS.AGENCY, query).then((agencies) => {
+        if (agencies[0].registrationCode === request.body.registrationCode) {
+            let newValuesObject = {
+                manualPending : 'active',
+            };
+            Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
+            let newValues = {
+                $set: newValuesObject
+            };
+            db.update(db.COLLECTIONS.AGENCY, query , newValues).then((agencies) => {
+                response.status(200).json(agencies);
+            }).catch(() => {
+                response.status(409).send("agency not found");
+            });
+        }
+    }).catch(() => {
+        response.status(409).send("agency not found");
+    });
+});
+
 router.post('/delete', function(request, response, next) {
 
     let query = {
