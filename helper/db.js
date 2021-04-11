@@ -80,10 +80,15 @@ function insert(collection, dataObject) {
     return new Promise((resolve, reject) => {
         if (dbo) {
             dbo.createCollection(collection, function (err, res) {
-                dbo.collection(collection).insertOne(dataObject, function(err, res) {
-                    if (err) reject(err);
-                    resolve(res);
+                dbo.collection(collection).count({}, function(error, numOfDocs){
+                    if(error) return callback(error);
+                    dataObject._id = numOfDocs;
+                    dbo.collection(collection).insertOne(dataObject, function(err, res) {
+                        if (err) reject(err);
+                        resolve(res);
+                    });
                 });
+
             });
         } else {
             reject();
@@ -121,4 +126,20 @@ function deleteFunction(collection, deleteQuery) {
     });
 }
 
-module.exports = {COLLECTIONS, find, findNewest, insert, update, deleteFunction};
+function getCountOfDocument(collection, deleteQuery) {
+    return new Promise((resolve, reject) => {
+        if (dbo) {
+            dbo.createCollection(collection, function (err, res) {
+                dbo.collection(collection).count({}, function(error, numOfDocs){
+                    if (error) reject(error);
+                    resolve(numOfDocs);
+                });
+
+            });
+        } else {
+            reject();
+        }
+    });
+}
+
+module.exports = {COLLECTIONS, find, findNewest, insert, update, deleteFunction, getCountOfDocument};

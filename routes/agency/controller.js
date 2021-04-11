@@ -3,6 +3,15 @@ var router = express.Router();
 var db = require('../../helper/db');
 
 
+router.get('/totalCount', function(request, response, next) {
+    db.getCountOfDocument(db.COLLECTIONS.AGENCY, {}).then((agencies) => {
+        response.status(200).json(agencies);
+    }).catch(() => {
+        response.status(409).send("agency not found");
+    });
+});
+
+
 router.get('/list', function(request, response, next) {
 
     let filterData = {
@@ -60,9 +69,9 @@ router.post('/insert', function(request, response, next) {
 
 router.post('/edit', function(request, response, next) {
     let query = {
-        agencyCode : request.query.agencyCode ,
+        agencyCode : request.body.agencyCode ,
     };
-    let newValues = {
+    let newValuesObject = {
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -77,6 +86,10 @@ router.post('/edit', function(request, response, next) {
         registrationDate :  request.body.registrationDate,
         nationalId :  request.body.nationalId,
         startDate :  request.body.startDate,
+    };
+    Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
+    let newValues = {
+        $set: newValuesObject
     };
     db.update(db.COLLECTIONS.AGENCY, query , newValues).then((files) => {
         response.status(200).json(files);
