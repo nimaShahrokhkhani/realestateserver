@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var express = require('express');
 var router = express.Router();
 var db = require('../../helper/db');
@@ -37,12 +38,12 @@ router.get('/list', function (request, response, next) {
             $gte: request.query.fromDate,//greater than or equal query
             $lte: request.query.toDate,
         },
-        address: {$all: request.query.address},
-        regionCode: {$all: request.query.regionCode},//contain query
-        regionName: {$all: request.query.regionName},
+        address: !_.isEmpty(request.query.address) ? {$all: request.query.address} : undefined,
+        regionCode: !_.isEmpty(request.query.regionCode) ? {$all: request.query.regionCode} : undefined,//contain query
+        regionName: !_.isEmpty(request.query.regionName) ? {$all: request.query.regionName} : undefined,
         sale: {
-            $gte: request.query.saleFrom,
-            $lte: request.query.saleTo,
+            $gte: request.query.fromSale,
+            $lte: request.query.toSale,
         },
         rent: {
             $gte: request.query.fromRent,
@@ -74,34 +75,34 @@ router.get('/list', function (request, response, next) {
         unitBuiltUpArea: request.query.unitBuiltUpArea,
         type: request.query.type,
         floorNo: {
-            $gte: request.query.floorNoTo,
-            $lte: request.query.floorNoFrom,
+            $gte: request.query.fromFloorNo,
+            $lte: request.query.toFloorNo,
         },
         unitNo: {
-            $gte: request.query.unitNoFrom,
-            $lte: request.query.unitNoTo,
+            $gte: request.query.fromUnitNo,
+            $lte: request.query.toUnitNo,
         },
         unitComment: request.query.unitComment,
         totalPrice: {
-            $gte: request.query.totalPriceFrom,
-            $lte: request.query.totalPriceTo,
+            $gte: request.query.fromTotalPrice,
+            $lte: request.query.toTotalPrice,
         },
         unitPrice: {
-            $gte: request.query.unitPriceFrom,
-            $lte: request.query.unitPriceTo,
+            $gte: request.query.fromUnitPrice,
+            $lte: request.query.toUnitPrice,
         },
         priceComment: request.query.priceComment,
         pool: request.query.pool,
         sona: request.query.sona,
         jakozi: request.query.jakozi,
         area: {
-            $gte: request.query.areaFrom,
-            $lte: request.query.areaTo,
+            $gte: request.query.fromArea,
+            $lte: request.query.toArea,
         },
         density: request.query.density,
         front: {
-            $gte: request.query.frontFrom,
-            $lte: request.query.frontTo,
+            $gte: request.query.fromFront,
+            $lte: request.query.toFront,
         },
         height: request.query.height,
         modify: request.query.modify,
@@ -114,8 +115,8 @@ router.get('/list', function (request, response, next) {
         empty: request.query.empty,
         rented: request.query.rented,
         age: {
-            $gte: request.query.ageFrom,
-            $lte: request.query.ageTo,
+            $gte: request.query.fromAge,
+            $lte: request.query.toAge,
         },
         frontKind: request.query.frontKind,
         source: request.query.source,
@@ -140,9 +141,11 @@ router.get('/list', function (request, response, next) {
     //  const decrypted =key.decrypt(filterData,'utf8');
     // console.log('decrypted: ', decrypted);
 
-    Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
-    db.find(db.COLLECTIONS.FILES, {}).then((files) => {
-        for (let file of files) {
+    Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && _.isEmpty(filterData[key].$gte) && delete filterData[key].$gte);
+    Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && _.isEmpty(filterData[key].$lte) && delete filterData[key].$lte);
+    Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
+    db.find(db.COLLECTIONS.FILES, filterData, request.query.offset, request.query.length).then((files) => {
+        for (let file of files.data) {
             file.tel1 = (file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.decrypt(file.tel1, 'utf8');
             file.tel2 = (file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.decrypt(file.tel2, 'utf8');
             file.tel3 = (file.tel3 === null || file.tel3 === undefined) ? file.tel3 : key.decrypt(file.tel3, 'utf8');
