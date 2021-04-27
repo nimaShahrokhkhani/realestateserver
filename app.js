@@ -10,7 +10,7 @@ const cors = require("cors");
 
 var app = express();
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use(bodyParser());
 
 app.use(logger('dev'));
