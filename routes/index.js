@@ -21,6 +21,7 @@ router.use('/files', require('./files'));
 router.use('/configs', require('./configs'));
 router.use('/regionPrice', require('./regionPrice'));
 router.use('/agency', require('./agency'));
+router.use('/advertising', require('./advertising'));
 
 
 module.exports = router;

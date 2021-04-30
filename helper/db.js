@@ -9,7 +9,8 @@ const COLLECTIONS = {
     CONFIGS:'configs',
     AGENCY : 'agency',
     REGIONPRICE : 'regionPrice' ,
-    ACCOUNTANT: 'accountant'
+    ACCOUNTANT: 'accountant',
+    ADVERTISING:'advertising',
 
 };
 
