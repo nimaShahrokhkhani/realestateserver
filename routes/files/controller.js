@@ -24,6 +24,14 @@ if (loadKey()) {
     }
 }
 
+router.get('/totalCount', function(request, response, next) {
+    db.getCountOfDocument(db.COLLECTIONS.FILES, {}).then((files) => {
+        response.status(200).json(files);
+    }).catch(() => {
+        response.status(409).send("file not found");
+    });
+});
+
 router.get('/list', function (request, response, next) {
     let filterData = {
         Id: request.query.Id,
@@ -145,14 +153,14 @@ router.get('/list', function (request, response, next) {
     Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && _.isEmpty(filterData[key].$lte) && delete filterData[key].$lte);
     Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
     db.find(db.COLLECTIONS.FILES, filterData, request.query.offset, request.query.length).then((files) => {
-        for (let file of files.data) {
-            file.tel1 = (file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.decrypt(file.tel1, 'utf8');
-            file.tel2 = (file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.decrypt(file.tel2, 'utf8');
-            file.tel3 = (file.tel3 === null || file.tel3 === undefined) ? file.tel3 : key.decrypt(file.tel3, 'utf8');
-            file.tel4 = (file.tel4 === null || file.tel4 === undefined) ? file.tel4 : key.decrypt(file.tel4, 'utf8');
-            file.tel5 = (file.tel5 === null || file.tel5 === undefined) ? file.tel5 : key.decrypt(file.tel5, 'utf8');
-            file.owner = (file.owner === null || file.owner === undefined) ? file.owner : key.decrypt(file.owner, 'utf8');
-        }
+        // for (let file of files.data) {
+        //     file.tel1 = (file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.decrypt(file.tel1, 'utf8');
+        //     file.tel2 = (file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.decrypt(file.tel2, 'utf8');
+        //     file.tel3 = (file.tel3 === null || file.tel3 === undefined) ? file.tel3 : key.decrypt(file.tel3, 'utf8');
+        //     file.tel4 = (file.tel4 === null || file.tel4 === undefined) ? file.tel4 : key.decrypt(file.tel4, 'utf8');
+        //     file.tel5 = (file.tel5 === null || file.tel5 === undefined) ? file.tel5 : key.decrypt(file.tel5, 'utf8');
+        //     file.owner = (file.owner === null || file.owner === undefined) ? file.owner : key.decrypt(file.owner, 'utf8');
+        // }
         response.status(200).json(files);
     }).catch(() => {
         response.status(409).send("file not found");
@@ -163,12 +171,12 @@ router.get('/list', function (request, response, next) {
 router.post('/insert', function (request, response, next) {
     let dataObject = {
         Id: request.body.Id,
-        tel1: key.encrypt(request.body.tel1, 'base64'),
-        tel2: key.encrypt(request.body.tel2, 'base64'),
-        tel3: key.encrypt(request.body.tel3, 'base64'),
-        tel4: key.encrypt(request.body.tel4, 'base64'),
-        tel5: key.encrypt(request.body.tel5, 'base64'),
-        owner: key.encrypt(request.body.owner, 'base64'),
+        tel1: request.body.tel1,//key.encrypt(request.body.tel1, 'base64'),
+        tel2: request.body.tel2,//key.encrypt(request.body.tel2, 'base64'),
+        tel3: request.body.tel3,//key.encrypt(request.body.tel3, 'base64'),
+        tel4: request.body.tel4,//key.encrypt(request.body.tel4, 'base64'),
+        tel5: request.body.tel5,//key.encrypt(request.body.tel5, 'base64'),
+        owner: request.body.owner,//key.encrypt(request.body.owner, 'base64'),
         iranDate: request.body.iranDate,
         date: request.body.date,
         address: request.body.address,
@@ -242,7 +250,7 @@ router.post('/insert', function (request, response, next) {
     // console.log('encrypted: ', encrypted);
     db.insert(db.COLLECTIONS.FILES, dataObject).then((files) => {
         response.status(200).json(files);
-    }).catch(() => {
+    }).catch((error) => {
         response.status(409).send("File did not added");
     });
 });
