@@ -259,7 +259,7 @@ router.post('/edit', function (request, response, next) {
     let query = {
         Id: request.body.Id,
     };
-    let newValues = {
+    let newValuesObject = {
         tel1: request.body.tel1,
         tel2: request.body.tel2,
         tel3: request.body.tel3,
@@ -333,6 +333,10 @@ router.post('/edit', function (request, response, next) {
         exchange: request.body.exchange,
         username: request.body.username,
         noOwnerAccess: request.body.noOwnerAccess,
+    };
+    Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
+    let newValues = {
+        $set: newValuesObject
     };
     db.update(db.COLLECTIONS.FILES, query, newValues).then((files) => {
         response.status(200).json(files);
