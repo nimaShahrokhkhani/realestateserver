@@ -46,9 +46,9 @@ router.get('/list', function (request, response, next) {
             $gte: request.query.fromDate,//greater than or equal query
             $lte: request.query.toDate,
         },
-        address: !_.isEmpty(request.query.address) ? {$all: request.query.address} : undefined,
-        regionCode: !_.isEmpty(request.query.regionCode) ? {$all: request.query.regionCode} : undefined,//contain query
-        regionName: !_.isEmpty(request.query.regionName) ? {$all: request.query.regionName} : undefined,
+        address: !_.isEmpty(request.query.address) ? {$in: request.query.address} : undefined,
+        regionCode: !_.isEmpty(request.query.regionCode) ? {$in: request.query.regionCode} : undefined,//contain query
+        regionName: !_.isEmpty(request.query.regionName) ? {$in: request.query.regionName} : undefined,
         sale: {
             $gte: request.query.fromSale,
             $lte: request.query.toSale,
