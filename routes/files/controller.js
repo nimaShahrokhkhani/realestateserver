@@ -144,6 +144,10 @@ router.get('/list', function (request, response, next) {
         exchange: request.query.exchange,
         username: request.query.username,
         noOwnerAccess: request.query.noOwnerAccess,
+        isDeleted: request.query.isDeleted,
+        isSold: request.query.isSold,
+        isRented: request.query.isRented,
+        isDontCall: request.query.isDontCall,
     };
 
     //  const decrypted =key.decrypt(filterData,'utf8');
@@ -244,6 +248,10 @@ router.post('/insert', function (request, response, next) {
         exchange: request.body.exchange,
         username: request.body.username,
         noOwnerAccess: request.body.noOwnerAccess,
+        isDeleted: request.body.isDeleted,
+        isSold: request.body.isSold,
+        isRented: request.body.isRented,
+        isDontCall: request.body.isDontCall,
     };
 
     //const encrypted = key.encrypt(dataObject, 'base64');
@@ -333,6 +341,10 @@ router.post('/edit', function (request, response, next) {
         exchange: request.body.exchange,
         username: request.body.username,
         noOwnerAccess: request.body.noOwnerAccess,
+        isDeleted: request.body.isDeleted,
+        isSold: request.body.isSold,
+        isRented: request.body.isRented,
+        isDontCall: request.body.isDontCall,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
