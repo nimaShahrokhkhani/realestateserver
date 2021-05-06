@@ -138,7 +138,7 @@ router.get('/list', function (request, response, next) {
             $lte: request.query.toNumber,
         },
         inHurry: request.query.inHurry,
-        equipments: request.query.equipments,
+        equipments: !_.isEmpty(request.query.equipments) ? {$in: request.query.equipments} : undefined,
         archive: request.query.archive,
         participation: request.query.participation,
         exchange: request.query.exchange,
