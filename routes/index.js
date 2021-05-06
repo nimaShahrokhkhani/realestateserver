@@ -5,6 +5,9 @@ const sessionManager = require('../helper/sessionManager');
  router.use(sessionManager.initialize());
 
 router.use('/login', require('./login'));
+
+router.use('/register', require('./register'));
+
 router.use((request, response, next) => {
     sessionManager.getSession(request)
         .then((session) => {
@@ -16,7 +19,6 @@ router.use((request, response, next) => {
 });
 router.use('/users', require('./users'));
 router.use('/accountant', require('./accountant'));
-router.use('/register', require('./register'));
 router.use('/files', require('./files'));
 router.use('/configs', require('./configs'));
 router.use('/regionPrice', require('./regionPrice'));
