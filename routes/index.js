@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 const sessionManager = require('../helper/sessionManager');
 
- router.use(sessionManager.initialize());
-
-router.use('/login', require('./login'));
-
+router.use(sessionManager.initialize());
+ router.use('/login', require('./login'));
 router.use('/register', require('./register'));
+router.use('/clientConfig', require('./clientConfig'));
 
 router.use((request, response, next) => {
     sessionManager.getSession(request)
