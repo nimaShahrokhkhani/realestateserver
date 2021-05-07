@@ -11,6 +11,7 @@ const COLLECTIONS = {
     REGIONPRICE : 'regionPrice' ,
     ACCOUNTANT: 'accountant',
     ADVERTISING:'advertising',
+    SERVICES:'services',
 
 };
 
