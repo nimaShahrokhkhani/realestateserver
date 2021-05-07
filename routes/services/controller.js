@@ -5,6 +5,7 @@ var db = require('../../helper/db');
 
 router.get('/list', function (request, response, next) {
     let filterData = {
+
         Id: request.query.Id,
         agencyName: request.query.agencyName,
         expert: request.query.expert,
@@ -14,6 +15,7 @@ router.get('/list', function (request, response, next) {
         debt: request.query.debt,
         description: request.query.description,
         date: request.query.date,
+
     };
 
 

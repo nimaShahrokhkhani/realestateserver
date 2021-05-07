@@ -15,6 +15,7 @@ router.get('/totalCount', function(request, response, next) {
 router.get('/list', function(request, response, next) {
 
     let filterData = {
+
         agencyName:request.query.agencyName ,
         agencyAddress: request.query.agencyAddress,
         managementName: request.query.managementName,
@@ -30,6 +31,9 @@ router.get('/list', function(request, response, next) {
         registrationDate :  request.query.registrationDate,
         nationalId :  request.query.nationalId,
         startDate :  request.query.startDate,
+        allowGetFileFrom: request.query.allowGetFileFrom,
+        allowGetFileTo: request.query.allowGetFileTo,
+
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -43,6 +47,7 @@ router.get('/list', function(request, response, next) {
 router.post('/insert', function(request, response, next) {
 
     let dataObject = {
+
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -58,6 +63,8 @@ router.post('/insert', function(request, response, next) {
         registrationDate :  request.body.registrationDate,
         nationalId :  request.body.nationalId,
         startDate :  request.body.startDate,
+        allowGetFileFrom: request.body.allowGetFileFrom,
+        allowGetFileTo: request.body.allowGetFileTo,
 
     };
     db.insert(db.COLLECTIONS.AGENCY, dataObject).then((files) => {
@@ -72,6 +79,7 @@ router.post('/edit', function(request, response, next) {
         agencyCode : request.body.agencyCode ,
     };
     let newValuesObject = {
+
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -86,6 +94,9 @@ router.post('/edit', function(request, response, next) {
         registrationDate :  request.body.registrationDate,
         nationalId :  request.body.nationalId,
         startDate :  request.body.startDate,
+        allowGetFileFrom: request.body.allowGetFileFrom,
+        allowGetFileTo: request.body.allowGetFileTo,
+
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
