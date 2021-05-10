@@ -46,6 +46,10 @@ router.get('/list', function (request, response, next) {
             $gte: parseInt(request.query.fromDate),//greater than or equal query
             $lte: parseInt(request.query.toDate),
         },
+        updateDate: {
+            $gte: parseInt(request.query.fromUpdateDate),//greater than or equal query
+            $lte: parseInt(request.query.toUpdateDate),
+        },
         address: !_.isEmpty(request.query.address) ? {$in: request.query.address} : undefined,
         regionCode: !_.isEmpty(request.query.regionCode) ? {$in: request.query.regionCode} : undefined,//contain query
         regionName: !_.isEmpty(request.query.regionName) ? {$in: request.query.regionName} : undefined,
@@ -183,6 +187,7 @@ router.post('/insert', function (request, response, next) {
         owner: request.body.owner,//key.encrypt(request.body.owner, 'base64'),
         iranDate: request.body.iranDate,
         date: request.body.date,
+        updateDate: request.body.updateDate,
         address: request.body.address,
         regionCode: request.body.regionCode,
         regionName: request.body.regionName,
@@ -276,6 +281,7 @@ router.post('/edit', function (request, response, next) {
         owner: request.body.owner,
         iranDate: request.body.iranDate,
         date: request.body.date,
+        updateDate: request.body.updateDate,
         address: request.body.address,
         regionCode: request.body.regionCode,
         regionName: request.body.regionName,
