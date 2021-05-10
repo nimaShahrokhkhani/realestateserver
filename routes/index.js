@@ -6,6 +6,7 @@ router.use(sessionManager.initialize());
  router.use('/login', require('./login'));
 router.use('/register', require('./register'));
 router.use('/clientConfig', require('./clientConfig'));
+router.use('/clientFiles', require('./clientFiles'));
 
 router.use((request, response, next) => {
     sessionManager.getSession(request)

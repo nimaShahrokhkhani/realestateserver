@@ -26,6 +26,7 @@ router.get('/list', function (request, response, next) {
         blackList: request.query.blackList,
     };
 
+    Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
     db.find(db.COLLECTIONS.CONFIGS, filterData).then((users) => {
         response.status(200).json(users);
     }).catch(() => {

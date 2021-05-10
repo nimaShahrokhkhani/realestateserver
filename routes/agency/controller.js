@@ -127,6 +127,8 @@ router.post('/registerAgency', function(request, response, next) {
             }).catch(() => {
                 response.status(409).send("agency not found");
             });
+        } else {
+            response.status(409).send("agency temporary code not found");
         }
     }).catch(() => {
         response.status(409).send("agency not found");
