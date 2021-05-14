@@ -5,6 +5,7 @@ var multer = require('multer');
 var path = require('path');
 var mime = require('mime');
 var fs = require('fs');
+var _ = require('underscore');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -34,9 +35,9 @@ router.get('/list', function (request, response, next) {
         minimumSalary: request.query.minimumSalary,
         comment: request.query.comment,
         priceFrom: request.query.priceFrom,
-        priceTo :request.query.priceTo,
-        priceFromMeter :request.query.priceFromMeter,
-        priceToMeter :request.query.priceToMeter,
+        priceTo: request.query.priceTo,
+        priceFromMeter: request.query.priceFromMeter,
+        priceToMeter: request.query.priceToMeter,
 
     };
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -79,14 +80,31 @@ router.post('/insert', function (request, response, next) {
         minimumSalary: request.body.minimumSalary,
         comment: request.body.comment,
         priceFrom: request.body.priceFrom,
-        priceTo :request.body.priceTo,
-        priceFromMeter :request.body.priceFromMeter,
-        priceToMeter :request.body.priceToMeter,
+        priceTo: request.body.priceTo,
+        priceFromMeter: request.body.priceFromMeter,
+        priceToMeter: request.body.priceToMeter,
     };
-    db.insert(db.COLLECTIONS.USERS, dataObject).then((res) => {
-        response.status(200).json(res);
+
+    var filterData = {
+        username: request.body.username
+    };
+
+    db.find(db.COLLECTIONS.USERS, filterData).then((users) => {
+        if (_.isEmpty(users)) {
+            db.insert(db.COLLECTIONS.USERS, dataObject).then((res) => {
+                response.status(200).json(res);
+            }).catch(() => {
+                response.status(409).send("User did not added");
+            });
+        } else {
+            response.status(409).send("User did not added");
+        }
     }).catch(() => {
-        response.status(409).send("User did not added");
+        db.insert(db.COLLECTIONS.USERS, dataObject).then((res) => {
+            response.status(200).json(res);
+        }).catch(() => {
+            response.status(409).send("User did not added");
+        });
     });
 });
 
@@ -111,9 +129,9 @@ router.post('/edit', upload.single('file'), function (request, response, next) {
         minimumSalary: request.query.minimumSalary,
         comment: request.query.comment,
         priceFrom: request.query.priceFrom,
-        priceTo :request.query.priceTo,
-        priceFromMeter :request.query.priceFromMeter,
-        priceToMeter :request.query.priceToMeter,
+        priceTo: request.query.priceTo,
+        priceFromMeter: request.query.priceFromMeter,
+        priceToMeter: request.query.priceToMeter,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {

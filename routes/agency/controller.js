@@ -15,7 +15,6 @@ router.get('/totalCount', function(request, response, next) {
 router.get('/list', function(request, response, next) {
 
     let filterData = {
-
         agencyName:request.query.agencyName ,
         agencyAddress: request.query.agencyAddress,
         managementName: request.query.managementName,
@@ -27,13 +26,13 @@ router.get('/list', function(request, response, next) {
         agencyCode : request.query.agencyCode,
         registrationCode: request.query.registrationCode,
         manualPending :  request.query.manualPending,
+        serviceStatus :  request.query.serviceStatus,
         expirationDate :  request.query.expirationDate,
         registrationDate :  request.query.registrationDate,
         nationalId :  request.query.nationalId,
         startDate :  request.query.startDate,
         allowGetFileFrom: request.query.allowGetFileFrom,
         allowGetFileTo: request.query.allowGetFileTo,
-
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -47,7 +46,6 @@ router.get('/list', function(request, response, next) {
 router.post('/insert', function(request, response, next) {
 
     let dataObject = {
-
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -59,13 +57,13 @@ router.post('/insert', function(request, response, next) {
         agencyCode : request.body.agencyCode,
         registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
+        serviceStatus :  request.body.serviceStatus,
         expirationDate :  request.body.expirationDate,
         registrationDate :  request.body.registrationDate,
         nationalId :  request.body.nationalId,
         startDate :  request.body.startDate,
         allowGetFileFrom: request.body.allowGetFileFrom,
         allowGetFileTo: request.body.allowGetFileTo,
-
     };
     db.insert(db.COLLECTIONS.AGENCY, dataObject).then((files) => {
         response.status(200).json(files);
@@ -79,7 +77,6 @@ router.post('/edit', function(request, response, next) {
         agencyCode : request.body.agencyCode ,
     };
     let newValuesObject = {
-
         agencyName:request.body.agencyName ,
         agencyAddress: request.body.agencyAddress,
         managementName: request.body.managementName,
@@ -90,13 +87,13 @@ router.post('/edit', function(request, response, next) {
         totalPrice: request.body.totalPrice,
         registrationCode: request.body.registrationCode,
         manualPending :  request.body.manualPending,
+        serviceStatus :  request.body.serviceStatus,
         expirationDate :  request.body.expirationDate,
         registrationDate :  request.body.registrationDate,
         nationalId :  request.body.nationalId,
         startDate :  request.body.startDate,
         allowGetFileFrom: request.body.allowGetFileFrom,
         allowGetFileTo: request.body.allowGetFileTo,
-
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
