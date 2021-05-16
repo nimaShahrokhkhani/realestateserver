@@ -38,6 +38,9 @@ router.get('/list', function (request, response, next) {
         priceTo: request.query.priceTo,
         priceFromMeter: request.query.priceFromMeter,
         priceToMeter: request.query.priceToMeter,
+        insertFile: request.query.insertFile,
+        deleteFile: request.query.deleteFile,
+        editFile: request.query.editFile,
 
     };
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -83,6 +86,9 @@ router.post('/insert', function (request, response, next) {
         priceTo: request.body.priceTo,
         priceFromMeter: request.body.priceFromMeter,
         priceToMeter: request.body.priceToMeter,
+        insertFile: request.body.insertFile,
+        deleteFile: request.body.deleteFile,
+        editFile: request.body.editFile,
     };
 
     var filterData = {
@@ -132,6 +138,9 @@ router.post('/edit', upload.single('file'), function (request, response, next) {
         priceTo: request.body.priceTo,
         priceFromMeter: request.body.priceFromMeter,
         priceToMeter: request.body.priceToMeter,
+        insertFile: request.body.insertFile,
+        deleteFile: request.body.deleteFile,
+        editFile: request.body.editFile,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
