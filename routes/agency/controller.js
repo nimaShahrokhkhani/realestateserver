@@ -36,7 +36,7 @@ router.get('/list', function(request, response, next) {
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
-    db.find(db.COLLECTIONS.AGENCY, {}).then((files) => {
+    db.find(db.COLLECTIONS.AGENCY, filterData).then((files) => {
         response.status(200).json(files);
     }).catch(() => {
         response.status(409).send("agency not found");

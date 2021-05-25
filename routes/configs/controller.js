@@ -39,6 +39,7 @@ router.get('/list', function(request, response, next) {
         telephone: request.query.telephone,
         floorCovering: request.query.floorCovering,
         blackList: request.query.blackList,
+        secondRegionPrice: request.query.secondRegionPrice,
     };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
@@ -83,6 +84,7 @@ router.post('/insert', function(request, response, next) {
         telephone: request.body.telephone,
         floorCovering: request.body.floorCovering,
         blackList: request.body.blackList,
+        secondRegionPrice: request.body.secondRegionPrice,
     };
     db.insert(db.COLLECTIONS.CONFIGS, dataObject).then((files) => {
         response.status(200).json(files);
@@ -128,6 +130,7 @@ router.post('/edit', function(request, response, next)
         telephone: request.body.telephone,
         floorCovering: request.body.floorCovering,
         blackList: request.body.blackList,
+        secondRegionPrice: request.body.secondRegionPrice,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {
