@@ -1,16 +1,21 @@
 'use strict';
 const session = require('express-session');
+var express = require('express');
+var MemoryStore =session.MemoryStore;
 
-function initialize() {
+function initialize(path) {
 
     return session({
         secret: 'newsession',
         cookie: {
+            path : path,
             httpOnly: true,
-            secure: false
+            secure: false,
+            maxAge: 24*60*60*1000
         },
-        saveUninitialized: false,
-        resave: false
+        store: new MemoryStore(),
+        saveUninitialized: true,
+        resave: true,
     });
 }
 
@@ -39,12 +44,12 @@ function regenerate(request) {
     });
 }
 
-function destroy(request, response) {
+function destroyClient(request, response) {
     return new Promise((fulfill, reject) => {
         request.session = null;
         request.sessionStore.destroy(request.sessionID, (error) => {
             if (!error) {
-                response.clearCookie('connect.sid', {path: '/'});
+                response.clearCookie('connect.sid', {path: '/client'});
                 fulfill();
             } else {
                 reject("generalError");
@@ -53,4 +58,18 @@ function destroy(request, response) {
     });
 }
 
-module.exports = {initialize, getSession, regenerate, destroy};
+function destroyBase(request, response) {
+    return new Promise((fulfill, reject) => {
+        request.session = null;
+        request.sessionStore.destroy(request.sessionID, (error) => {
+            if (!error) {
+                response.clearCookie('connect.sid', {path: '/base'});
+                fulfill();
+            } else {
+                reject("generalError");
+            }
+        });
+    });
+}
+
+module.exports = {initialize, getSession, regenerate, destroyClient, destroyBase};
