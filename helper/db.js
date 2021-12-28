@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var url = "gilanfileTest:admin4525@mongodb://localhost:27017";
+var url = "mongodb://localhost:27017";
 var dbo = undefined;
 //collections
 
