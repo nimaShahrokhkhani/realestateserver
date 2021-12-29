@@ -211,8 +211,7 @@ router.post('/list', function (request, response, next) {
                     },
                     regionCode: !_.isEmpty(request.body.regionCode) ? request.body.regionCode :
                         (!_.isEmpty(getRegionCodeList(agency.regionList)) ? {$in: getRegionCodeList(agency.regionList)} : undefined),
-                    regionName: !_.isEmpty(request.body.regionName) ? request.body.regionName :
-                        !_.isEmpty(getRegionNameList(agency.regionList)) ? {$in: getRegionNameList(agency.regionList)} : undefined,
+                    regionName: !_.isEmpty(request.body.regionName) ? request.body.regionName : undefined,
                     sale: !_.isEmpty(request.body.sale) ? request.body.sale : undefined,
                     area: {
                         $gte: parseInt(request.body.fromArea),
