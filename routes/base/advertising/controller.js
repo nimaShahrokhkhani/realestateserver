@@ -161,6 +161,7 @@ router.get('/list', function(request, response, next) {
         contactInfoEmail: request.query.contactInfoEmail,
         contactInfoTel: request.query.contactInfoTel,
         images: request.query.images,
+        showOnSite: request.query.showOnSite,
     };
 
     Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && Number.isNaN(filterData[key].$gte) && delete filterData[key].$gte);
@@ -262,6 +263,7 @@ router.post('/insert', upload.array('files', 10), function(request, response, ne
         contactInfoName: request.body.contactInfoName,
         contactInfoEmail: request.body.contactInfoEmail,
         contactInfoTel: request.body.contactInfoTel,
+        showOnSite: request.body.contactInfoTel,
     };
     db.insert(db.COLLECTIONS.ADVERTISING, dataObject).then((files) => {
         response.status(200).json(files);
@@ -357,6 +359,25 @@ router.post('/edit', upload.single('file'), function(request, response, next) {
         contactInfoName: request.body.contactInfoName,
         contactInfoEmail: request.body.contactInfoEmail,
         contactInfoTel: request.body.contactInfoTel,
+        showOnSite: request.body.showOnSite,
+    };
+    Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
+    let newValues = {
+        $set: newValuesObject
+    };
+    db.update(db.COLLECTIONS.ADVERTISING, query , newValues).then((files) => {
+        response.status(200).json(files);
+    }).catch(() => {
+        response.status(409).send("ADs not found");
+    });
+});
+
+router.post('/active', function(request, response, next) {
+    let query = {
+        advertisingCode : request.body.advertisingCode ,
+    };
+    let newValuesObject = {
+        showOnSite: request.body.showOnSite,
     };
     Object.keys(newValuesObject).forEach(key => newValuesObject[key] === undefined && delete newValuesObject[key]);
     let newValues = {

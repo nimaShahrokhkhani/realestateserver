@@ -151,6 +151,7 @@ router.get('/list', function(request, response, next) {
         contactInfoEmail: request.query.contactInfoEmail,
         contactInfoTel: request.query.contactInfoTel,
         images: request.query.images,
+        showOnSite: true,
     };
 
     Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && Number.isNaN(filterData[key].$gte) && delete filterData[key].$gte);
@@ -252,6 +253,7 @@ router.post('/insert', upload.array('files', 10), function(request, response, ne
         contactInfoName: request.body.contactInfoName,
         contactInfoEmail: request.body.contactInfoEmail,
         contactInfoTel: request.body.contactInfoTel,
+        showOnSite: false
     };
     db.insert(db.COLLECTIONS.ADVERTISING, dataObject).then((files) => {
         response.status(200).json(files);
