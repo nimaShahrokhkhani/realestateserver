@@ -169,7 +169,6 @@ router.get('/list', function (request, response, next) {
     Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
     Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
     Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
-    console.log('filterData', filterData)
     db.find(db.COLLECTIONS.ADVERTISING, filterData, request.query.offset, request.query.length).then((advertises) => {
         response.status(200).json(advertises);
     }).catch(() => {
@@ -298,7 +297,7 @@ router.get('/latestList', function (request, response, next) {
         contactInfoEmail: request.query.contactInfoEmail,
         contactInfoTel: request.query.contactInfoTel,
         images: request.query.images,
-        showOnSite: true,
+        showOnSite: 'true',
     };
 
     Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && Number.isNaN(filterData[key].$gte) && delete filterData[key].$gte);

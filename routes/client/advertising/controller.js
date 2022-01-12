@@ -151,7 +151,7 @@ router.get('/list', function(request, response, next) {
         contactInfoEmail: request.query.contactInfoEmail,
         contactInfoTel: request.query.contactInfoTel,
         images: request.query.images,
-        showOnSite: true,
+        showOnSite: 'true',
     };
 
     Object.keys(filterData).forEach(key => !_.isEmpty(filterData[key]) && Number.isNaN(filterData[key].$gte) && delete filterData[key].$gte);
