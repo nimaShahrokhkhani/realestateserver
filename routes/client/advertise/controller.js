@@ -169,6 +169,7 @@ router.get('/list', function (request, response, next) {
     Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
     Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
     Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
+    console.log('filterData', filterData)
     db.find(db.COLLECTIONS.ADVERTISING, filterData, request.query.offset, request.query.length).then((advertises) => {
         response.status(200).json(advertises);
     }).catch(() => {
