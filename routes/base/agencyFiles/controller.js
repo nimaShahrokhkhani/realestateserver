@@ -253,7 +253,7 @@ router.post('/list', function (request, response, next) {
                 Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
                 Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
                 Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
-                db.find(db.COLLECTIONS.FILES, filterData).then((files) => {
+                db.findWithSort(db.COLLECTIONS.FILES, filterData, request.body.offset, request.body.length, {'_id': -1}).then((files) => {
                     response.status(200).json(files);
                 }).catch((error) => {
                     response.status(500).send("file not found");
