@@ -200,6 +200,7 @@ router.post('/list', function (request, response, next) {
         agencyCode: request.body.agencyCode
     };
 
+    console.log('codeeeeeeeee=>', request.body.agencyCode, !_.isEmpty(request.body.agencyCode))
     if (!_.isEmpty(request.body.agencyCode)) {
         db.find(db.COLLECTIONS.AGENCY, filterAgency).then((agencies) => {
             if (!_.isEmpty(agencies) && agencies.length !== 0) {
