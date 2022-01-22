@@ -317,7 +317,7 @@ router.post('/list', function (request, response, next) {
         Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
         Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
         Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
-        console.log('222222222222222222')
+        console.log('222222222222222222', request.body.offset, request.body.length)
         db.findWithSort(db.COLLECTIONS.FILES, filterData, request.body.offset, request.body.length, {'_id': -1}).then((files) => {
             console.log('3333333333333333333', files)
             if (files.data.totalCount !== 0) {
