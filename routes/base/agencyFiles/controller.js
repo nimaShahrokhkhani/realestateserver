@@ -268,6 +268,7 @@ router.post('/list', function (request, response, next) {
             response.status(409).send("agency not found");
         });
     } else {
+        console.log('1111111111111111')
         let filterData = {
             date: {
                 $gte: parseInt(request.body.fromDate),//greater than or equal query
@@ -316,8 +317,10 @@ router.post('/list', function (request, response, next) {
         Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
         Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
         Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
+        console.log('222222222222222222')
         db.findWithSort(db.COLLECTIONS.FILES, filterData, request.body.offset, request.body.length, {'_id': -1}).then((files) => {
-            if (files.totalCount !== 0) {
+            console.log('3333333333333333333', files)
+            if (files.data.totalCount !== 0) {
                 for (let file of files.data.data) {
                     file.tel1 = '';//(file.tel1 === null || file.tel1 === undefined) ? file.tel1 : key.encrypt(file.tel1, 'base64');
                     file.tel2 = '';//(file.tel2 === null || file.tel2 === undefined) ? file.tel2 : key.encrypt(file.tel2, 'base64');
