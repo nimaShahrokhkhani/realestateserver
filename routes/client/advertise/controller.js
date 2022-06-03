@@ -169,7 +169,7 @@ router.get('/list', function (request, response, next) {
     Object.keys(filterData).forEach(key => _.isEmpty(filterData[key]) && delete filterData[key]);
     Object.keys(filterData).forEach(key => filterData[key] === 'true' && (filterData[key] = true));
     Object.keys(filterData).forEach(key => filterData[key] === 'false' && (filterData[key] = false));
-    db.find(db.COLLECTIONS.ADVERTISING, filterData, request.query.offset, request.query.length).then((advertises) => {
+    db.findWithSort(db.COLLECTIONS.ADVERTISING, filterData, request.query.offset, request.query.length, {'date': -1}).then((advertises) => {
         response.status(200).json(advertises);
     }).catch(() => {
         response.status(409).send("ADs not found");
