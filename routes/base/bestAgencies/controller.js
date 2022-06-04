@@ -4,7 +4,9 @@ var db = require('../../../helper/db');
 
 router.get('/list', function (request, response, next) {
 
-    let filterData = {};
+    let filterData = {
+        bestAgency: true
+    };
 
     Object.keys(filterData).forEach(key => filterData[key] === undefined && delete filterData[key]);
     db.findWithSort(db.COLLECTIONS.AGENCY, filterData, request.query.offset, request.query.length, {'_id': -1}).then((agencies) => {
